@@ -34,4 +34,15 @@ export const pathFinder = (() => {
     }
 }
 
+    const printPath = (path) => {
+        const test = path.map(elem => elem.split(",")).map((elem) => [Number(elem[0]), Number(elem[1])]).reverse()
+        let str = `From [${test[0]}] to [${test[test.length-1]}] => You made it in ${test.length - 1} moves!  Here's your path:`
+        test.forEach(elem => {
+            str += "\n"
+            str += `[${elem}]`;
+        })
+        console.log(str);    
+    }
+
+    return { bfs, findPath, printPath }
 })();
