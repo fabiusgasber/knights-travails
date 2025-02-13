@@ -1,17 +1,14 @@
 import { AdjacencyList } from "./adjacency-list.js";
 
 export const pathFinder = (() => {
-    const findPath = (list, start, visited = [], testList, root) => {
-        if(!start || start[0] === root[0] && start[1] === root[1]) {
-            visited.push(start.toString())
-            return visited;
+    const findPath = (current, target, list, path = [], root = target) => {
+        if(!current || current[0] === root[0] && current[1] === root[1]) {
+            path.push(current.toString())
+            return path;
         }
-        visited.push(start.toString())
-        testList = list.filter(elem => elem.child[0] === start[0] && elem.child[1] === start[1]);
-        const next = testList[0];
-        // create visited array to avoid duplicates...
-        if(next && next.parent) return findPath(list, next.parent, visited, testList, root);
-    
+        path.push(current.toString())
+        const next = list.filter(elem => elem.child[0] === current[0] && elem.child[1] === current[1])?.at(0);
+        if(next && next.parent) return findPath(next.parent, target, list, path);
     }
     
     const bfs = (start, end, q = [], visited = [],  possibleMoves = []) => {
