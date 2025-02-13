@@ -56,7 +56,3 @@ export class AdjacencyList {
         return coordinates;
     }
 }
-
-const firstVertex = new AdjacencyList([6, 7]);
-console.log(firstVertex.getList());
-console.log(firstVertex.getCoordinate());
