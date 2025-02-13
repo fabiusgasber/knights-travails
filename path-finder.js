@@ -14,27 +14,27 @@ export const pathFinder = (() => {
     
     }
     
-    const bfs = (q = [], visited = [], end, test = [], root) => {
+    const bfs = (start, end, q = [], visited = [],  possibleMoves = []) => {
         if(!q.length) return;
         const current = q.shift();
         if(visited.includes(current.toString()) && !q.length) return; // we found the end of the graph :)
         else if(visited.includes(current.toString()) && q.length) { // we already visited this vertex, continue instead
-            return bfs(q, visited, end, test, root);
+            return bfs(start, end, q, visited, possibleMoves);
         }
         else {
         visited.push(current.toString());
         const graph = new AdjacencyList(current).getList();
         for(const vertex in graph){
             for(const edge in graph[vertex]){
-                test.push({parent: current, child: [Number(vertex), graph[vertex][edge]]});
+                possibleMoves.push({parent: current, child: [Number(vertex), graph[vertex][edge]]});
                 q.push([Number(vertex), graph[vertex][edge]]);
                 if(Number(vertex) === end[0] && graph[vertex][edge] === end[1]) { // found a match in queue
-                    return findPath(test, end, [], [], root);
+                    return possibleMoves;
                 }
             }
         }
-        return bfs(q, visited, end, test, root);
+        return bfs(start, end, q, visited, possibleMoves);
     }
 }
-    return { bfs }
+
 })();
