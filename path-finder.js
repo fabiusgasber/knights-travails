@@ -2,7 +2,8 @@ import { AdjacencyList } from "./adjacency-list.js";
 
 export const pathFinder = (() => {
     const findPath = (current, target, list, path = [], root = target) => {
-        if(!current || current[0] === root[0] && current[1] === root[1]) {
+        if(!current || !target || !list) return;
+        if(current[0] === root[0] && current[1] === root[1]) {
             path.push(current.toString())
             return path;
         }
@@ -12,7 +13,7 @@ export const pathFinder = (() => {
     }
     
     const bfs = (start, end, q = [], visited = [],  possibleMoves = []) => {
-        if(!q.length) return;
+        if(!start || !end || !q.length) return;
         const current = q.shift();
         if(visited.includes(current.toString()) && !q.length) return; // we found the end of the graph :)
         else if(visited.includes(current.toString()) && q.length) { // we already visited this vertex, continue instead
@@ -35,6 +36,7 @@ export const pathFinder = (() => {
 }
 
     const printPath = (path) => {
+        if(!path) return;
         const test = path.map(elem => elem.split(",")).map((elem) => [Number(elem[0]), Number(elem[1])]).reverse()
         let str = `From [${test[0]}] to [${test[test.length-1]}] => You made it in ${test.length - 1} moves!  Here's your path:`
         test.forEach(elem => {

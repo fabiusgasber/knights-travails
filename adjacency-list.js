@@ -1,12 +1,7 @@
 export class AdjacencyList {
     constructor(coordinates = []) {
-        try {
-            this.coordinates = this.checkCoordinates(coordinates) 
-        }
-        catch (error) {
-            console.log(error.message);
-        };
-        if(this.coordinates) {
+        if(AdjacencyList.checkCoordinates(coordinates)) {
+            this.coordinates = coordinates;
             this.list = Array.from({ length: 8}, () => new Array());
             this.#setEdges();
         }
@@ -51,8 +46,7 @@ export class AdjacencyList {
         }
     }
 
-    checkCoordinates = (coordinates) => {
-        if(!coordinates || !Array.isArray(coordinates) || coordinates.length !== 2 || coordinates[0] < 0 || coordinates[0] > 7 || coordinates[1] < 0 || coordinates[1] > 7) throw new Error("Please enter coordinates as an array in the format [0, 0] from 0 to 7");
-        return coordinates;
+    static checkCoordinates = (coordinates) => {
+        return (coordinates && Array.isArray(coordinates) && coordinates.length === 2 && coordinates[0] >= 0 && coordinates[0] <= 7 && coordinates[1] >= 0 && coordinates[1] <= 7);
     }
 }
